@@ -35,9 +35,10 @@ env/
 ENV/
 .tox/
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+notebook/.ipynb_checkpoints/
 
+# Jupyter Notebook checkpoints
+.
 # Project-specific ignores
 data/
 models/
