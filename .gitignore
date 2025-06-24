@@ -43,4 +43,4 @@ notebook/.ipynb_checkpoints/
 data/
 models/
 *.log
-/tmp/ 
+/tmp/ venv/

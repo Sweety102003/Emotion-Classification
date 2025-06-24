@@ -17,6 +17,7 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 from sklearn.ensemble import RandomForestClassifier
 import joblib
 import warnings
+import random
 warnings.filterwarnings('ignore')
 
 # Set random seeds for reproducibility
@@ -64,6 +65,75 @@ def parse_filename(filename):
         }
     return None
 
+def augment_audio(audio, sr):
+    """Apply random augmentation to audio."""
+    # Random noise
+    if random.random() < 0.3:
+        noise = np.random.normal(0, 0.005, len(audio))
+        audio = audio + noise
+    # Random pitch shift
+    if random.random() < 0.3:
+        steps = float(np.random.uniform(-2, 2))
+        audio = librosa.effects.pitch_shift(y=audio, sr=sr, n_steps=steps)
+    # Random time stretch
+    if random.random() < 0.3:
+        rate = float(np.random.uniform(0.8, 1.2))
+        audio = librosa.effects.time_stretch(y=audio, rate=rate)
+        # Pad or trim to original length
+        target_len = int(sr * 3)
+        if len(audio) < target_len:
+            audio = np.pad(audio, (0, target_len - len(audio)), 'constant')
+        else:
+            audio = audio[:target_len]
+    return audio
+
+def extract_features_from_audio(audio, sr):
+    """Extract features from a numpy audio array and sample rate."""
+    try:
+        # Pad or truncate to ensure consistent length
+        max_length = 3
+        target_len = int(sr * max_length)
+        if len(audio) < target_len:
+            audio = np.pad(audio, (0, target_len - len(audio)), 'constant')
+        else:
+            audio = audio[:target_len]
+        # Extract features (same as extract_features)
+        mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
+        mfcc_scaled = np.mean(mfcc.T, axis=0)
+        mfcc_std = np.std(mfcc.T, axis=0)
+        chroma = librosa.feature.chroma_stft(y=audio, sr=sr)
+        chroma_scaled = np.mean(chroma.T, axis=0)
+        chroma_std = np.std(chroma.T, axis=0)
+        mel = librosa.feature.melspectrogram(y=audio, sr=sr)
+        mel_scaled = np.mean(mel.T, axis=0)
+        mel_std = np.std(mel.T, axis=0)
+        contrast = librosa.feature.spectral_contrast(y=audio, sr=sr)
+        contrast_scaled = np.mean(contrast.T, axis=0)
+        contrast_std = np.std(contrast.T, axis=0)
+        tonnetz = librosa.feature.tonnetz(y=audio, sr=sr)
+        tonnetz_scaled = np.mean(tonnetz.T, axis=0)
+        tonnetz_std = np.std(tonnetz.T, axis=0)
+        centroid = librosa.feature.spectral_centroid(y=audio, sr=sr)
+        centroid_scaled = np.mean(centroid.T, axis=0)
+        rolloff = librosa.feature.spectral_rolloff(y=audio, sr=sr)
+        rolloff_scaled = np.mean(rolloff.T, axis=0)
+        zcr = librosa.feature.zero_crossing_rate(audio)
+        zcr_scaled = np.mean(zcr.T, axis=0)
+        rms = librosa.feature.rms(y=audio)
+        rms_scaled = np.mean(rms.T, axis=0)
+        features = np.concatenate([
+            mfcc_scaled, mfcc_std,
+            chroma_scaled, chroma_std,
+            mel_scaled[:20], mel_std[:20],
+            contrast_scaled, contrast_std,
+            tonnetz_scaled, tonnetz_std,
+            centroid_scaled, rolloff_scaled, zcr_scaled, rms_scaled
+        ])
+        return features
+    except Exception as e:
+        print(f"Error processing audio array: {e}")
+        return None
+
 def extract_features(file_path, max_length=3):
     """Extract audio features from a single file"""
     try:
@@ -71,10 +141,11 @@ def extract_features(file_path, max_length=3):
         audio, sr = librosa.load(file_path, sr=22050, duration=max_length)
         
         # Pad or truncate to ensure consistent length
-        if len(audio) < sr * max_length:
-            audio = np.pad(audio, (0, sr * max_length - len(audio)), 'constant')
+        target_len = int(sr * max_length)
+        if len(audio) < target_len:
+            audio = np.pad(audio, (0, target_len - len(audio)), 'constant')
         else:
-            audio = audio[:sr * max_length]
+            audio = audio[:target_len]
         
         # Extract features
         # MFCC features
@@ -229,6 +300,14 @@ def main():
         if features is not None:
             features_list.append(features)
             valid_indices.append(idx)
+            # Data augmentation: only for training data (first 70%)
+            if idx < int(0.7 * len(df)):
+                audio, sr = librosa.load(row['filepath'], sr=22050, duration=3)
+                audio_aug = augment_audio(audio, sr)
+                features_aug = extract_features_from_audio(audio_aug, sr)
+                if features_aug is not None:
+                    features_list.append(features_aug)
+                    valid_indices.append(idx)
 
     df_filtered = df.iloc[valid_indices].reset_index(drop=True)
     features_array = np.array(features_list)

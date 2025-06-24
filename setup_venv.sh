@@ -18,14 +18,13 @@ pip install --upgrade pip
 echo "Installing required packages..."
 pip install -r requirements.txt
 
-# Install additional packages that might be missing
-echo "Installing additional packages..."
-pip install joblib
-
 echo "=== Virtual Environment Setup Complete ==="
 echo ""
 echo "To activate the virtual environment, run:"
 echo "source venv/bin/activate"
 echo ""
-echo "To run the emotion classification pipeline, run:"
-echo "python scripts/emotion_classification_pipeline.py" 
+echo "To install dependencies (if you add new ones), run:"
+echo "make install"
+echo ""
+echo "To start the notebook: make notebook"
+echo "To start the web app: make app" 

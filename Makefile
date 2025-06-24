@@ -5,7 +5,7 @@ PYTHON = venv/bin/python
 PIP = venv/bin/pip
 
 # Phony targets are not actual files
-.PHONY: all install notebook app clean help
+.PHONY: all install notebook app clean help setup
 
 # Default target
 all: help
@@ -36,7 +36,12 @@ clean:
 # Display help
 help:
 	@echo "Available commands:"
+	@echo "  make setup     - Full setup: create venv and install dependencies"
 	@echo "  make install   - Install project dependencies"
 	@echo "  make notebook  - Start the Jupyter Notebook server"
 	@echo "  make app       - Run the Streamlit web application"
-	@echo "  make clean     - Remove temporary Python files" 
+	@echo "  make clean     - Remove temporary Python files"
+
+setup:
+	@echo "Running full environment setup..."
+	bash setup_venv.sh 
