@@ -7,14 +7,14 @@ A comprehensive end-to-end pipeline for emotion classification using speech data
 This project implements a machine learning system that can accurately identify and categorize emotional states conveyed in speech/song. The system leverages the RAVDESS (Ryerson Audio-Visual Database of Emotional Speech and Song) dataset and uses advanced audio processing techniques combined with deep learning to achieve emotion classification.
 
 ### Supported Emotions
-- 😊 **Happy** - Joyful and positive emotions
-- 😢 **Sad** - Melancholic and sorrowful emotions  
-- 😠 **Angry** - Aggressive and hostile emotions
-- 😨 **Fearful** - Anxious and scared emotions
-- 🤢 **Disgust** - Repulsed and averse emotions
-- 😲 **Surprised** - Shocked and astonished emotions
-- 😐 **Neutral** - Calm and emotionless speech
-- 😌 **Calm** - Peaceful and relaxed emotions
+-  **Happy** - Joyful and positive emotions
+-  **Sad** - Melancholic and sorrowful emotions  
+-  **Angry** - Aggressive and hostile emotions
+-  **Fearful** - Anxious and scared emotions
+-  **Disgust** - Repulsed and averse emotions
+-  **Surprised** - Shocked and astonished emotions
+-  **Neutral** - Calm and emotionless speech
+-  **Calm** - Peaceful and relaxed emotions
 
 ## Evaluation Criteria
 
