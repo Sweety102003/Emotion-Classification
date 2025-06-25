@@ -1,10 +1,12 @@
-"""
-Streamlit Web App for Emotion Classification
-A web interface for uploading audio files and predicting emotions
-"""
-
 import streamlit as st
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+import logging
+logging.getLogger('absl').setLevel(logging.ERROR)
+
+import warnings
+warnings.filterwarnings('ignore')
+
 import sys
 import numpy as np
 import librosa
@@ -222,7 +224,7 @@ def main():
     """Main Streamlit app"""
     
     # Header
-    st.markdown('<h1 class="main-header">🎤 Emotion Classification from Speech</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">Emotion Classification from Speech</h1>', unsafe_allow_html=True)
     st.markdown("""
     <div style="text-align: center; margin-bottom: 2rem;">
         <p style="font-size: 1.2rem; color: #666;">
@@ -233,20 +235,20 @@ def main():
     
     # Sidebar
     with st.sidebar:
-        st.markdown('<h3 class="sub-header">📊 About</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 class="sub-header"> About</h3>', unsafe_allow_html=True)
         st.markdown("""
         This application uses a deep learning model trained on the RAVDESS dataset 
         to classify emotions from speech audio.
         
         **Supported Emotions:**
-        - 😊 Happy
-        - 😢 Sad  
-        - 😠 Angry
-        - 😨 Fearful
-        - 🤢 Disgust
-        - 😲 Surprised
-        - 😐 Neutral
-        - 😌 Calm
+        -  Happy
+        -  Sad  
+        - Angry
+        - Fearful
+        - Disgust
+        - Surprised
+        -  Neutral
+        - Calm
         
         **Supported Audio Formats:**
         - WAV
@@ -256,12 +258,12 @@ def main():
         - OGG
         """)
         
-        st.markdown('<h3 class="sub-header">📈 Model Performance</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 class="sub-header"> Model Performance</h3>', unsafe_allow_html=True)
         st.metric("Overall Accuracy", "68.06%")
         st.metric("F1 Score", "67.23%")
         st.metric("Classes", "8 emotions")
         
-        st.markdown('<h3 class="sub-header">🔧 Technical Details</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 class="sub-header">Technical Details</h3>', unsafe_allow_html=True)
         st.markdown("""
         - **Model**: Deep Neural Network
         - **Features**: MFCC, Chroma, Mel, Spectral
@@ -273,7 +275,7 @@ def main():
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown('<h2 class="sub-header">🎵 Upload Audio File</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 class="sub-header">Upload Audio File</h2>', unsafe_allow_html=True)
         
         # File upload
         uploaded_file = st.file_uploader(
@@ -309,7 +311,7 @@ def main():
                     st.error(result['error'])
                 else:
                     # Display results
-                    st.markdown('<h2 class="sub-header">🎯 Prediction Results</h2>', unsafe_allow_html=True)
+                    st.markdown('<h2 class="sub-header"> Prediction Results</h2>', unsafe_allow_html=True)
                     
                     # Main prediction
                     col_pred1, col_pred2 = st.columns([1, 1])
@@ -337,12 +339,12 @@ def main():
                         st.markdown(f'<div style="text-align: center; font-size: 4rem;">{emoji}</div>', unsafe_allow_html=True)
                     
                     # Probability visualization
-                    st.markdown('<h3 class="sub-header">📊 Emotion Probabilities</h3>', unsafe_allow_html=True)
+                    st.markdown('<h3 class="sub-header"> Emotion Probabilities</h3>', unsafe_allow_html=True)
                     fig = create_emotion_visualization(result['probabilities'])
                     st.pyplot(fig)
                     
                     # Detailed probabilities
-                    st.markdown('<h3 class="sub-header">📋 Detailed Results</h3>', unsafe_allow_html=True)
+                    st.markdown('<h3 class="sub-header"> Detailed Results</h3>', unsafe_allow_html=True)
                     
                     # Sort probabilities
                     sorted_probs = sorted(result['probabilities'].items(), key=lambda x: x[1], reverse=True)
@@ -353,19 +355,19 @@ def main():
                         
                         # Create progress bar
                         st.markdown(f"**{emoji} {emotion.capitalize()}**")
-                        st.progress(prob)
+                        st.progress(float(prob))
                         st.markdown(f"<div style='text-align: right; color: {color}; font-weight: bold;'>{prob:.2%}</div>", unsafe_allow_html=True)
                         st.markdown("---")
     
     with col2:
-        st.markdown('<h2 class="sub-header">🎵 Audio Preview</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 class="sub-header"> Audio Preview</h2>', unsafe_allow_html=True)
         
         if uploaded_file is not None:
             # Audio player
             st.audio(uploaded_file, format='audio/wav')
             
             # Audio visualization
-            st.markdown('<h3 class="sub-header">📈 Audio Analysis</h3>', unsafe_allow_html=True)
+            st.markdown('<h3 class="sub-header"> Audio Analysis</h3>', unsafe_allow_html=True)
             
             # Reset file pointer for visualization
             uploaded_file.seek(0)

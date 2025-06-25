@@ -2,7 +2,7 @@
 
 A comprehensive end-to-end pipeline for emotion classification using speech data, built with deep learning and audio processing techniques.
 
-## 🎯 Project Overview
+## Project Overview
 
 This project implements a machine learning system that can accurately identify and categorize emotional states conveyed in speech/song. The system leverages the RAVDESS (Ryerson Audio-Visual Database of Emotional Speech and Song) dataset and uses advanced audio processing techniques combined with deep learning to achieve emotion classification.
 
@@ -16,16 +16,16 @@ This project implements a machine learning system that can accurately identify a
 - 😐 **Neutral** - Calm and emotionless speech
 - 😌 **Calm** - Peaceful and relaxed emotions
 
-## 📊 Evaluation Criteria
+## Evaluation Criteria
 
 The model's performance is evaluated based on the following criteria:
 
-- ✅ **Confusion Matrix** - Primary judging criteria
-- ✅ **F1 Score > 80%** - Target: 67.23% (Current)
-- ✅ **Per-class Accuracy > 75%** - Target: 2/8 classes meet criteria (Current)
-- ✅ **Overall Accuracy > 80%** - Target: 68.06% (Current)
+-  **Confusion Matrix** - Primary judging criteria
+-  **F1 Score > 80%** - Target: 67.23% (Current)
+-  **Per-class Accuracy > 75%** - Target: 2/8 classes meet criteria (Current)
+-  **Overall Accuracy > 80%** - Target: 68.06% (Current)
 
-## 🏗️ Project Structure
+##  Project Structure
 
 ```
 emotion-classification/
@@ -53,7 +53,7 @@ emotion-classification/
 └── README.md                      # This file
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -84,6 +84,33 @@ emotion-classification/
    - Download from: [RAVDESS Dataset](https://zenodo.org/record/1188976)
    - Extract to the `data/` directory
    - Ensure structure: `data/Actor_01/`, `data/Actor_02/`, etc.
+
+### Downloading Data and Model Files
+
+> **Note:** The RAVDESS dataset and trained model files are **not included** in this repository due to size and copyright restrictions. Please follow the instructions below to download and set up these files locally.
+
+#### 1. Download the RAVDESS Dataset
+- Download from: [RAVDESS Dataset on Zenodo](https://zenodo.org/record/1188976)
+- Extract the contents to the `data/` directory in your project root.
+- The structure should look like:
+  ```
+  data/
+    Actor_01/
+    Actor_02/
+    ...
+  ```
+
+#### 2. Download the Trained Model (if available)
+- [Optional] If a pre-trained model is provided, download it from the link shared by the project maintainer (e.g., Google Drive, Dropbox, HuggingFace, etc.).
+- Place all model files (e.g., `.h5`, `.pkl`) in the `models/` directory.
+- Example structure:
+  ```
+  models/
+    final_emotion_model.h5
+    final_label_encoder.pkl
+    final_scaler.pkl
+    ...
+  ```
 
 ### Training the Model
 
@@ -118,7 +145,7 @@ streamlit run app.py
 
 The web app will be available at `http://localhost:8501`
 
-## 📚 Methodology
+##  Methodology
 
 ### 1. Data Preprocessing
 
@@ -221,23 +248,69 @@ python scripts/test_model.py --dir audio_directory/
 3. View real-time emotion classification results
 4. Explore audio visualizations and probability distributions
 
-## 📈 Results and Analysis
+## Results & Demo
+
+### Model Performance (Final)
+
+- **Overall Accuracy:** 72.83%
+- **F1 Score (Macro):** 72.16%
+- **F1 Score (Weighted):** 72.60%
+
+**Per-class Accuracy:**
+- Angry: 87.76%
+- Calm: 68.33%
+- Disgust: 70.91%
+- Fearful: 79.49%
+- Happy: 69.57%
+- Neutral: 62.96%
+- Sad: 64.29%
+- Surprised: 76.00%
+
+| Emotion   | Precision | Recall | F1-Score | Support |
+|-----------|-----------|--------|----------|---------|
+| Angry     | 0.88      | 0.88   | 0.88     | 49      |
+| Calm      | 0.68      | 0.84   | 0.75     | 49      |
+| Disgust   | 0.71      | 0.80   | 0.75     | 49      |
+| Fearful   | 0.79      | 0.63   | 0.70     | 49      |
+| Happy     | 0.70      | 0.65   | 0.67     | 49      |
+| Neutral   | 0.63      | 0.68   | 0.65     | 25      |
+| Sad       | 0.64      | 0.55   | 0.59     | 49      |
+| Surprised | 0.76      | 0.78   | 0.77     | 49      |
+
+![Classification Report & Per-class Accuracy](assets/training_results_2.png)
+*Terminal output: Final classification report and per-class accuracy check.*
+
+### Training & Evaluation Output
+
+![Training Results](assets/training_results.png)
+*Terminal output showing training progress, accuracy, F1 scores, and per-class results.*
 
 ### Confusion Matrix
-The confusion matrix shows the model's performance across all emotion classes, highlighting areas of strength and confusion between similar emotions.
 
-### Key Findings
-- **Best Performing**: Calm (81.48% precision) and Disgust (84.00% precision)
-- **Challenging Classes**: Happy (47.50% precision) and Sad (63.16% precision)
-- **Model Strengths**: Good discrimination for calm and disgust emotions
-- **Areas for Improvement**: Better feature engineering for happy/sad emotions
+![Confusion Matrix](models/confusion_matrix_final.png)
+*Final confusion matrix for the test set.*
 
-### Limitations
-- Current accuracy (68.06%) below target (80%)
-- Some emotion classes show low precision
-- Model may benefit from data augmentation and ensemble methods
+### Streamlit Web App Demo
 
-## 🔧 Technical Details
+#### 1. App Home & Upload
+
+![Streamlit Upload](assets/streamlit_upload.png)
+*Streamlit app: Upload and preview audio file.*
+
+#### 2. Audio Analysis & Prediction
+
+![Streamlit Prediction](assets/streamlit_prediction.png)
+*Streamlit app: Predicted emotion, confidence, and probability distribution.*
+
+#### 3. Detailed Results
+
+![Streamlit Detailed](assets/streamlit_detailed.png)
+
+*Streamlit app: Detailed probability distribution for all emotions.*
+
+---
+
+##  Technical Details
 
 ### Dependencies
 
@@ -268,7 +341,7 @@ The confusion matrix shows the model's performance across all emotion classes, h
 - **Memory Management**: Batch processing for large datasets
 - **GPU Support**: Compatible with TensorFlow GPU acceleration
 
-## 🚀 Deployment
+##  Deployment
 
 ### Local Deployment
 
@@ -297,7 +370,7 @@ For production deployment, consider:
 - Setting up monitoring and logging
 - Implementing authentication and rate limiting
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature-name`
@@ -305,24 +378,5 @@ For production deployment, consider:
 4. Push to branch: `git push origin feature-name`
 5. Submit a pull request
 
-## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- **RAVDESS Dataset**: Ryerson Audio-Visual Database of Emotional Speech and Song
-- **Librosa**: Audio and music signal processing library
-- **TensorFlow**: Deep learning framework
-- **Streamlit**: Web application framework
-
-## 📞 Contact
-
-For questions, issues, or contributions:
-- Create an issue on GitHub
-- Contact the development team
-
----
-
-**Note**: This project is designed for educational and research purposes. The model performance may vary depending on the audio quality, speaker characteristics, and environmental conditions.
-
+--

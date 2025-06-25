@@ -1,7 +1,4 @@
-"""
-Final Emotion Classification Pipeline
-Working implementation with focus on achieving >80% accuracy
-"""
+
 
 import os
 import pandas as pd
@@ -46,14 +43,12 @@ emotion_map = {
 def parse_filename(filename):
     """Parse RAVDESS filename to extract emotion and other metadata"""
     parts = filename.replace('.wav', '').split('-')
-    
     if len(parts) >= 7:
         emotion_code = parts[2]
         intensity = parts[3]
         statement = parts[4]
         repetition = parts[5]
         actor = parts[6]
-        
         return {
             'filename': filename,
             'emotion_code': emotion_code,
@@ -63,6 +58,8 @@ def parse_filename(filename):
             'repetition': repetition,
             'actor': actor
         }
+    else:
+        print(f"[WARN] Skipping file with unexpected format: {filename} (parts: {parts})")
     return None
 
 def augment_audio(audio, sr):
@@ -284,6 +281,8 @@ def main():
                         if metadata:
                             metadata['filepath'] = os.path.join(actor_path, file)
                             audio_files.append(metadata)
+                        else:
+                            print(f"[WARN] File skipped due to parsing issue: {file}")
     
     df = pd.DataFrame(audio_files)
     print(f"Total audio files found: {len(df)}")
