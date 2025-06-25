@@ -259,9 +259,22 @@ def main():
         """)
         
         st.markdown('<h3 class="sub-header"> Model Performance</h3>', unsafe_allow_html=True)
-        st.metric("Overall Accuracy", "68.06%")
-        st.metric("F1 Score", "67.23%")
+        st.metric("Overall Accuracy", "72.83%")
+        st.metric("F1 Score", "72.16%")
         st.metric("Classes", "8 emotions")
+        
+        st.markdown("""
+        | Emotion   | Precision | Recall | F1-Score | Support |
+        |-----------|-----------|--------|----------|---------|
+        | Angry     | 0.88      | 0.88   | 0.88     | 49      |
+        | Calm      | 0.68      | 0.84   | 0.75     | 49      |
+        | Disgust   | 0.71      | 0.80   | 0.75     | 49      |
+        | Fearful   | 0.79      | 0.63   | 0.70     | 49      |
+        | Happy     | 0.70      | 0.65   | 0.67     | 49      |
+        | Neutral   | 0.63      | 0.68   | 0.65     | 25      |
+        | Sad       | 0.64      | 0.55   | 0.59     | 49      |
+        | Surprised | 0.76      | 0.78   | 0.77     | 49      |
+        """)
         
         st.markdown('<h3 class="sub-header">Technical Details</h3>', unsafe_allow_html=True)
         st.markdown("""
