@@ -21,9 +21,9 @@ This project implements a machine learning system that can accurately identify a
 The model's performance is evaluated based on the following criteria:
 
 -  **Confusion Matrix** - Primary judging criteria
--  **F1 Score > 80%** - Target: 67.23% (Current)
--  **Per-class Accuracy > 75%** - Target: 2/8 classes meet criteria (Current)
--  **Overall Accuracy > 80%** - Target: 68.06% (Current)
+-  **F1 Score > 80%** - Target: 72.16% (Current)
+-  **Per-class Accuracy > 75%** - Target: 3/8 classes meet criteria (Current)
+-  **Overall Accuracy > 80%** - Target: 72.83% (Current)
 
 ##  Project Structure
 
