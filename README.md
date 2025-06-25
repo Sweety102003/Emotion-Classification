@@ -43,7 +43,7 @@ emotion-classification/
 ├── scripts/                       # Python scripts
 │   ├── final_emotion_classification.py
 │   ├── test_model.py
-│   └── emotion_classification_pipeline.py
+│   └── cnn_mel_pipeline.py
 ├── streamlit_app/                 # Web application
 │   └── app.py
 ├── venv/                          # Virtual environment
@@ -207,16 +207,16 @@ Output Layer (8 classes, softmax)
 - **F1 Score (Weighted)**: 67.81%
 
 **Per-class Performance**:
-| Emotion   | Precision | Recall | F1-Score | Status |
-|-----------|-----------|--------|----------|--------|
-| Angry     | 73.33%    | 79%    | 76%      | ❌     |
-| Calm      | 81.48%    | 76%    | 79%      | ✅     |
-| Disgust   | 84.00%    | 72%    | 78%      | ✅     |
-| Fearful   | 75.00%    | 62%    | 68%      | ❌     |
-| Happy     | 47.50%    | 66%    | 55%      | ❌     |
-| Neutral   | 70.00%    | 50%    | 58%      | ❌     |
-| Sad       | 63.16%    | 41%    | 50%      | ❌     |
-| Surprised | 63.41%    | 90%    | 74%      | ❌     |
+| Emotion   | Precision | Recall | F1-Score | 
+|-----------|-----------|--------|----------|
+| Angry     | 73.33%    | 79%    | 76%      |
+| Calm      | 81.48%    | 76%    | 79%      |
+| Disgust   | 84.00%    | 72%    | 78%      | 
+| Fearful   | 75.00%    | 62%    | 68%      |
+| Happy     | 47.50%    | 66%    | 55%      |
+| Neutral   | 70.00%    | 50%    | 58%      | 
+| Sad       | 63.16%    | 41%    | 50%      |   
+| Surprised | 63.41%    | 90%    | 74%      |     
 
 ## 🎮 Usage Examples
 
@@ -287,26 +287,32 @@ python scripts/test_model.py --dir audio_directory/
 
 ### Confusion Matrix
 
-![Confusion Matrix](models/confusion_matrix_final.png)
+![Confusion Matrix](confusion_matrix_final.png)
 *Final confusion matrix for the test set.*
 
 ### Streamlit Web App Demo
 
 #### 1. App Home & Upload
 
-![Streamlit Upload](assets/streamlit_upload.png)
+![Streamlit Upload](assets/streamlit_upload_new.png)
 *Streamlit app: Upload and preview audio file.*
 
-#### 2. Audio Analysis & Prediction
+#### 2. Prediction Results
 
-![Streamlit Prediction](assets/streamlit_prediction.png)
+![Streamlit Prediction](assets/streamlit_prediction_new.png)
 *Streamlit app: Predicted emotion, confidence, and probability distribution.*
 
 #### 3. Detailed Results
 
-![Streamlit Detailed](assets/streamlit_detailed.png)
+![Streamlit Detailed](assets/streamlit_detailed_new.png)
+*Streamlit app: Detailed probability distribution for all emotions and per-class bars.*
 
-*Streamlit app: Detailed probability distribution for all emotions.*
+---
+
+> **Note:**
+> - The **Evaluation Metrics** section below documents the initial or baseline results of the project.
+> - The **Results & Demo** section presents the final, improved results and the user-facing demo.
+
 
 ---
 
