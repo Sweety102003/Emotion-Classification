@@ -386,3 +386,8 @@ For production deployment, consider:
 
 
 --
+
+
+## For queries 
+
+- Contact-hoodasweety890@gmail.com
